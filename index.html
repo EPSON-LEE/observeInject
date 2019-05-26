@@ -51,19 +51,24 @@
   })()
 </script>
 <script>
+  var getElementById = (function (func) {
+    return function () {
+      return func.apply(document, arguments)
+    }
+  })(document.getElementById)
   // https://stackoverflow.com/questions/10560356/mutation-observers-subtree 说明
   window.onload = function() {
     // // 监控sttribute变化
-    // document.getElementById('root').style.color = 'red'
-    // document.getElementById('root').id = 'red'
+    getElementById('root').style.color = 'red'
+    getElementById('root').id = 'red'
     // // 监控 childlist变化
-    // document.getElementById('red').append(document.createElement('div'))
-    // for (let i = 0; i <= 10; i++) {
-    //   var li = document.createElement('li')
-    //   li.innerHTML = 'test'
-    //   document.getElementById('list').append(li)
-    // }
-    // document.getElementById('child').innerHTML = '444'
+    getElementById('red').append(document.createElement('div'))
+    for (let i = 0; i <= 10; i++) {
+      var li = document.createElement('li')
+      li.innerHTML = 'test'
+      getElementById('list').append(li)
+    }
+    getElementById('child').innerHTML = '444'
     // 添加一个脚本
     var script = document.createElement('script')
     script.src = 'https://baidu.com'
