@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div style="color: aliceblue" id="root">
+    <div id="child"></div>
+    <ul id="list"></ul>
+  </div>
+</body>
+<script>
+  // observer script
+  (function startObserve() {
+    var observer = new MutationObserver(
+      function(mutationsList) {
+        for (let mutation of mutationsList) {
+          switch(mutation.type) {
+            case 'childList':
+              console.log('A child node has been added or delete')
+              console.log(mutation.addedNodes)
+              console.log(mutation.target)              
+              break
+            case 'attributes':
+              console.log(`The ${mutation.attributeName} was modified `)
+              console.log(mutation.target)              
+              break
+            case 'subtree':
+              console.log(`The subtree was modified `)
+              console.log(mutation.oldValue)
+              console.log(mutation.target)  
+              break
+            default:
+              break        
+          }
+        }
+      }
+    ),
+
+    config = {
+      'childList': true,
+      'attributes': true,
+      // 是否应用于他的所有后代节点
+      'subtree': true
+    }
+
+    observer.observe(document.getElementById('root'), config)
+  })()
+</script>
+<script>
+  // https://stackoverflow.com/questions/10560356/mutation-observers-subtree 说明
+  window.onload = function() {
+    // // 监控sttribute变化
+    // document.getElementById('root').style.color = 'red'
+    // document.getElementById('root').id = 'red'
+    // // 监控 childlist变化
+    // document.getElementById('red').append(document.createElement('div'))
+    // for (let i = 0; i <= 10; i++) {
+    //   var li = document.createElement('li')
+    //   li.innerHTML = 'test'
+    //   document.getElementById('list').append(li)
+    // }
+    // document.getElementById('child').innerHTML = '444'
+    // 添加一个脚本
+    var script = document.createElement('script')
+    script.src = 'https://baidu.com'
+    document.body.append(script)
+  }
+</script>
+</html>
